@@ -117,13 +117,17 @@ async function searchGoogleMaps() {
       const firstOfLast = lastChild.children().first();
       const lastOfLast = lastChild.children().last();
 
-      var addressRegex = /\d+ [\w\s]+(?:#\s*\d+|Suite\s*\d+|Apt\s*\d+)?/;
+      var container = parent.closest('[jsaction*="mouseover:pane"]');
 
-      console.log(firstOfLast);
+      var containerText = container.textContent || "";
+      var addressRegex = /\d+ [\w\s]+(?:#\s*\d+|Suite\s*\d+|Apt\s*\d+)?/;
+      var addressMatch = containerText.match(addressRegex);
+
+      //addressMatch = firstOfLast?.text()?.split("·")?.[1]?.trim();
 
       buisnesses.push({
-        placeId: `ChI${url?.split("?")?.[0]?.split("ChI")?.[1]}`,
-        address: firstOfLast?.text()?.split("·")?.[1]?.trim(),
+        // placeId: `ChI${url?.split("?")?.[0]?.split("ChI")?.[1]}`,
+        address: addressMatch,
         category: firstOfLast?.text()?.split("·")?.[0]?.trim(),
         phone: lastOfLast?.text()?.split("·")?.[1]?.trim(),
         googleUrl: url,
@@ -147,7 +151,7 @@ async function searchGoogleMaps() {
 
     console.log(`time in seconds ${Math.floor((end - start) / 1000)}`);
 
-    // buisnesses.forEach((el) => console.log(el.val));
+    // buisnesses.forEach((el) => console.log(el));
     return buisnesses;
   } catch (error) {
     console.log("error at googleMaps", error.message);
