@@ -19,9 +19,8 @@ function tableToCsv(table) {
 
   saveCsv(csv.toString());
 }
-function saveJsonToCsv(jsonArray) {
+function saveJsonToCsv(jsonArray, filePath) {
   try {
-    filePath = "./files/google-scrap.csv";
     // Create a new parser with the fields derived from the keys of the first object in the array
     const json2csvParser = new Parser();
     const csv = json2csvParser.parse(jsonArray);
@@ -44,11 +43,9 @@ function saveCsv(csv) {
   });
 }
 
-async function readCSVFile() {
+async function readCSVFile(filePath) {
   return new Promise((resolve, reject) => {
     const results = [];
-
-    filePath = "../files/google-scrap.csv";
 
     fs.createReadStream(filePath)
       .pipe(parse({ delimiter: ",", columns: true })) // Adjust delimiter if necessary

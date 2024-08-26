@@ -99,9 +99,9 @@ document.addEventListener("DOMContentLoaded", function () {
     downloadCsvButton.addEventListener("click", function () {
       var filename = filenameInput.value.trim();
 
-      const query = document.querySelector(
-        'input[class*="searchboxinput"]'
-      ).value;
+      var csv = tableToCsv(resultsTable);
+
+      const query = ""; //document.querySelector( 'input[class*="searchboxinput"]').value;
 
       if (!filename) {
         filename = "google-maps-data-" + query + ".csv";
@@ -249,6 +249,22 @@ async function scrapeData() {
       href: link.href,
     };
   });
+}
+// Convert the table to a CSV string
+function tableToCsv(table) {
+  var csv = [];
+  var rows = table.querySelectorAll("tr");
+
+  for (var i = 0; i < rows.length; i++) {
+    var row = [],
+      cols = rows[i].querySelectorAll("td, th");
+
+    for (var j = 0; j < cols.length; j++) {
+      row.push('"' + cols[j].innerText + '"');
+    }
+    csv.push(row.join(","));
+  }
+  return csv.join("\n");
 }
 // Download the CSV file
 function downloadCsv(csv, filename) {

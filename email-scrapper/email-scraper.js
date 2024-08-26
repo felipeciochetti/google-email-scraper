@@ -32,7 +32,7 @@ async function emailScraper(data) {
       element.email = await findEmailsOnWebsite(element.web);
     }
 
-    saveJsonToCsv(data);
+    return data;
   } catch (error) {
     console.error(`Error`, error);
   } finally {
@@ -112,11 +112,14 @@ async function findEmailsOnWebsite(websiteUrl) {
   }
 }
 
+module.exports = emailScraper;
+/*
 async function start() {
   const websiteUrl = await readCSVFile();
   emailScraper(websiteUrl);
 }
+*/
 // Example usage
 
 //findEmailsOnWebsite(websiteUrl);
-start();
+//start();

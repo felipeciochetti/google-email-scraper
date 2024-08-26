@@ -23,21 +23,25 @@ async function searchWebSite(data) {
   const places = [];
   var x = 0;
   for (const element of data) {
-    console.log(x++);
+    console.log(x++, "of", data.length);
+    console.log("Waiting for 3 seconds...");
+    await delay(3000); // Waits for 5 seconds
+
     if (x > 10) {
       break;
     }
-    const place = await searchGoogleMaps(element.googleUrl);
+
+    const place = await searchGoogleMaps(element["Google Maps Link"]);
     places.push(place);
   }
 
   await browser.close();
 
-  console.log(places);
-
   return places;
 }
-
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 async function searchGoogleMaps(url) {
   puppeteerExtra.use(stealthPlugin());
 
