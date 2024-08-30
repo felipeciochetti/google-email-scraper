@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var currentTab = tabs[0];
     var actionButton = document.getElementById("actionButton");
     var downloadCsvButton = document.getElementById("downloadCsvButton");
+
     var resultsTable = document.getElementById("resultsTable");
     var filenameInput = document.getElementById("filenameInput");
 
@@ -43,6 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
           // Define and add headers to the table
           const headers = [
+            " ",
             "Title",
             "Rating",
             "Reviews",
@@ -58,11 +60,13 @@ document.addEventListener("DOMContentLoaded", function () {
           });
           resultsTable.appendChild(headerRow);
 
+          var count = 1;
           // Add new results to the table
           if (!results || !results[0] || !results[0].result) return;
           results[0].result.forEach(function (item) {
             var row = document.createElement("tr");
             [
+              "count",
               "title",
               "rating",
               "reviewCount",
@@ -72,11 +76,12 @@ document.addEventListener("DOMContentLoaded", function () {
             ].forEach(function (key) {
               var cell = document.createElement("td");
 
-              if (key === "reviewCount" && item[key]) {
-                item[key] = item[key].replace(/\(|\)/g, "");
+              if (key === "count") {
+                cell.textContent = count++;
+              } else {
+                cell.textContent = item[key] || "";
               }
 
-              cell.textContent = item[key] || "";
               row.appendChild(cell);
             });
             resultsTable.appendChild(row);

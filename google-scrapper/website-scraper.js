@@ -27,11 +27,8 @@ async function searchWebSite(data) {
     console.log("Waiting for 3 seconds...");
     await delay(3000); // Waits for 5 seconds
 
-    if (x > 10) {
-      break;
-    }
-
     const place = await searchGoogleMaps(element["Google Maps Link"]);
+    console.log("Web Site", place?.web);
     places.push(place);
   }
 
